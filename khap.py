@@ -8,14 +8,15 @@ app = Flask(__name__)
 
 @app.route("/", methods=["GET"])
 def primary():
-
-    action = request.args.get('action')
+    if request.args.get("action") is not None:
+        action = request.args.get("action")
+    else:
+        return "!"
 
     if action == "install":
         package = request.args.get('package')
         info = request.args.get('info')
         return config[package]["binaries"][info]["link"]
-    
     elif action == "search":
         package = request.args.get('package')
         info = request.args.get('info')
@@ -25,3 +26,8 @@ def primary():
         ]
 
         return '\n'.join(packages)
+    else:
+        return "!"
+
+if __name__ == "__main__":
+    app.run(host='0.0.0.0')

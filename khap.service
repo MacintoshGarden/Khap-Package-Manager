@@ -1,0 +1,13 @@
+[Unit]
+Description=uWSGI instance to serve khap behind nginx
+After=network.target
+
+[Service]
+User=username
+Group=www-data
+WorkingDirectory=/home/username/khap
+Environment="PATH=/home/username/khap/khapenv/bin"
+ExecStart=/home/username/khap/khapenv/bin/uwsgi --ini khap.ini
+
+[Install]
+WantedBy=multi-user.target
