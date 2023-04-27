@@ -1,4 +1,5 @@
-from flask import Flask, request
+import sqlite3
+from flask import Flask, g, request, render_template
 from json import loads
 
 with open("config.json", "r") as f:
@@ -11,7 +12,7 @@ def primary():
     if request.args.get("action") is not None:
         action = request.args.get("action")
     else:
-        return "!"
+        return render_template("index.html")
 
     if action == "install":
         package = request.args.get('package')
@@ -27,7 +28,7 @@ def primary():
 
         return '\n'.join(packages)
     else:
-        return "!"
+        return render_template("index.html")
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0')
